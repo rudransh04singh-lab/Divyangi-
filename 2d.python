@@ -1,0 +1,21 @@
+# 2D array (list of lists)
+arr = [
+    [10, 20, 30],
+    [40, 50, 60],
+    [70, 80, 90]
+]
+
+# Writing 2D array to a text file
+with open("array2d.txt", "w") as f:
+    for row in arr:
+        f.write(" ".join(map(str, row)) + "\n")
+
+print("2D array written to array2d.txt")
+
+# Reading 2D array back from text file
+loaded_arr = []
+with open("array2d.txt", "r") as f:
+    for line in f:
+        loaded_arr.append(list(map(int, line.split())))
+
+print("Loaded 2D array:", loaded_arr)
