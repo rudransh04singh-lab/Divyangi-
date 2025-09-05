@@ -1,0 +1,62 @@
+import csv
+import os
+
+FILENAME = "stack.csv"
+
+# Initialize the CSV file (only once)
+if not os.path.exists(FILENAME):
+    with open(FILENAME, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Stack"])  # header
+
+
+# Push operation
+def push(value):
+    with open(FILENAME, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([value])
+    print(f"Pushed: {value}")
+
+
+# Pop operation
+def pop():
+    rows = []
+    with open(FILENAME, "r") as f:
+        reader = list(csv.reader(f))
+        if len(reader) <= 1:  # only header present
+            print("Stack is empty!")
+            return None
+        rows = reader
+
+    # Last element = top of stack
+    popped = rows[-1][0]
+    rows = rows[:-1]  # remove last row
+
+    # Write back updated stack
+    with open(FILENAME, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerows(rows)
+
+    print(f"Popped: {popped}")
+    return popped
+
+
+# Show stack
+def display():
+    with open(FILENAME, "r") as f:
+        reader = list(csv.reader(f))
+        if len(reader) <= 1:
+            print("Stack is empty!")
+        else:
+            stack = [row[0] for row in reader[1:]]  # skip header
+            print("Current Stack:", stack)
+
+
+# Demo
+push(10)
+push(20)
+push(30)
+display()
+
+pop()
+display()
